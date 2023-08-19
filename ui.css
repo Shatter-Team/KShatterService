@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --main-colour: #2e8dba;
+    --main-colour-light: #2e8dba60;
+}
+
+p, h1, h2, h3, li {
+    font-family: "Inter", sans-serif;
+    margin-bottom: 0.5em;
+}
+
+ul, ol {
+    padding-left: 2em;
+}
+
+.main-content-fullpage {
+    margin: 1em;
+}
+
+a {
+    color: var(--main-colour);
+    text-decoration: none;
+}
+
+::selection {
+    background: var(--main-colour-light);
+}
