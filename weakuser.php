@@ -188,6 +188,7 @@ $gEndMan->add("weak-user-login-ui", function (Page $page) {
 	 */
 	
 	$page->set_mode(PAGE_MODE_HTML);
+	KSHeader($page);
 	
 	if (!$page->has("submit")) {
 		$form = new Form("./api.php?action=weak-user-login-ui&submit=1");
@@ -210,14 +211,18 @@ $gEndMan->add("weak-user-delete-ui", function (Page $page) {
 	$user = weak_user_from_page_cookies($page);
 	
 	if ($user) {
+		KSHeader($page);
+		
 		if (!$page->has("submit")) {
-			$page->add("<p>User account id: $user->id</p><p style=\"color:#f00;\">Note: Even after you delete your account, data about your segments will still be available, and this user ID will be reserved.</p><p><a href=\"./api.php?action=weak-user-delete-ui&submit=1\"><button>Delete account</button></p>");
+			$page->add("<h1>Confirm account deletion</h1><p>You are deleting the account with the creator name \"$user->creator\" and the user ID $user->id. <b>This is permanent and cannot be undone.</b></p><div class=\"warning\"><p>Note: Even after you delete your account, data about your segments will still be available, and this user ID can never be used again.</p></div><p><a href=\"./api.php?action=weak-user-delete-ui&submit=1\"><button class=\"red-button\">Delete account</button></p>");
 		}
 		else {
 			$user->pseudodelete();
 			$user->save();
 			$page->add("Account deleted");
 		}
+		
+		KSFooter($page);
 	}
 	else {
 		$page->add("<h1>Wrong or bad uid or token</h1><p>Please log in to your weak account before doing this. This can also happen if you entered the wrong UID or token.</p>");

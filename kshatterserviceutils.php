@@ -1,5 +1,9 @@
 <?php
 
+if (!defined("APP_LOADED")) {
+    die();
+}
+
 function KSHeader(Page $page, string $title = "Shatter") {
 	$page->add("<!DOCTYPE html>
 <html>

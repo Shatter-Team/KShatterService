@@ -8,6 +8,7 @@ require_once "main.php";
 
 require_once "kshatterserviceutils.php";
 require_once "weakuser.php";
+require_once "claims.php";
 
 $gEndMan->add("list-bundles", function (Page $page) {
     $page->set("bundles", [
