@@ -232,3 +232,31 @@ $gEndMan->add("weak-user-delete-ui", function (Page $page) {
 		$page->add("<h1>Wrong or bad uid or token</h1><p>Please log in to your weak account before doing this. This can also happen if you entered the wrong UID or token.</p>");
 	}
 });
+
+$gEndMan->add("weak-user-delete-admin-ui", function (Page $page) {
+	$page->set_mode(PAGE_MODE_HTML);
+	KSHeader($page);
+	
+	$user = user_get_current();
+	
+	if ($user && $user->is_admin()) {
+		if (!$page->has("submit")) {
+			$page->heading(1, "Delete weak user");
+			$form = new Form("./api.php?action=weak-user-delete-admin-ui&submit=1");
+			$form->textbox("uid", "User ID", "");
+			$form->submit("Delete weak user");
+			$page->add($form);
+		}
+		else {
+			$weak = new WeakUser($page->get("uid"));
+			$weak->pseudodelete();
+			$weak->save();
+			$page->para("Account deleted");
+		}
+	}
+	else {
+		$page->info("Not authed", "You are not authed, you need to be authed.");
+	}
+	
+	KSFooter($page);
+});
