@@ -51,6 +51,10 @@ class WeakUser {
 		$this->token = null;
 	}
 	
+	function is_deleted() : bool {
+		return $this->token === null;
+	}
+	
 	function set_token(string $token) : void {
 		/**
 		 * Set the login token/password/thing
@@ -148,7 +152,7 @@ $gEndMan->add("weak-user-set-name", function (Page $page) {
 	$weak = weak_user_current($uid, $token);
 	
 	if ($weak) {
-		$weak->creator = $page->get("name");
+		$weak->creator = $page->get("name", true, 512);
 		$weak->save();
 		$page->info("done", "The creator name has been set.");
 	}
@@ -171,7 +175,7 @@ $gEndMan->add("weak-user-lookup", function (Page $page) {
 	$weak = new WeakUser($uid);
 	
 	$page->set("id", $weak->id);
-	$page->set("deleted", $weak->token === null);
+	$page->set("deleted", $weak->is_deleted());
 	$page->set("creator", $weak->creator);
 	$page->set("created", $weak->created);
 	$page->set("updated", $weak->updated);
