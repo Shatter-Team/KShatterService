@@ -39,7 +39,7 @@ function segment_claim_exists(string $id) : bool {
 }
 
 function hash_segment_data(?string $data) : ?string {
-	return $data ? hash("sha3-256", $data) : null;
+	return $data ? hash("sha3-256", str_replace("\r\n", "\n", $data)) : null;
 }
 
 $gEndMan->add("weak-user-claim", function (Page $page) {
@@ -120,7 +120,7 @@ $gEndMan->add("segment-lookup-ui", function (Page $page) {
 		$page->para("<span style=\"opacity: 0.6;\">Note: The creator can put anything into the feild. Make sure to be careful with links, and don't assume that this is the original creator.</span>");
 		$page->para("Creator registered on: " . get_formatted_datetime($user->created));
 		$page->para("Segment claimed on: " . get_formatted_datetime($claim->created));
-		$page->para("<a href=\"\">Report abuse on Shatter discord</a>");
+		$page->para("<a href=\"https://discord.gg/28kHvwVP9z\">Report abuse on Shatter discord</a>");
 	}
 	
 	KSFooter($page);
